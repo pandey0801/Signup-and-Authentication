@@ -26,7 +26,40 @@ const AuthForm = () => {
 
      if (isLogin)
      {
+        fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA3zLM-Lv_vXtqmX-ajC7hatD_7jSHCqyg',
+        {
+          method : 'POST',
+          body : JSON.stringify({
+            email : enterEmail,
+            password : enterPassword,
+            returnSecureToken : true
+          }),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        }).then(res=>{
+          if(res.ok)
+            {
+              // console.log(res.json());
+              return res.json();
 
+            }
+            else{
+              return res.json().then(data => {
+                // console.log(data)
+                let errorMessage = 'Auth failed';
+                throw new Error(errorMessage);
+              })
+
+            }
+        })
+        .then((data) =>{
+          console.log(data);
+        })
+        .catch((err) =>
+        {
+          alert(err.message);
+        })
      }
      else { 
       // fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyA3zLM-Lv_vXtqmX-ajC7hatD_7jSHCqyg',
@@ -44,9 +77,10 @@ const AuthForm = () => {
           }
         }
       ).then(res =>{
-        setLoading(false);
+        // setLoading(false);
+        console.log(res)
         if(res.ok){
-          console.log(res.json().PromiseState);
+          console.log(res.json());
 
         }
         else{
