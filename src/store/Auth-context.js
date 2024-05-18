@@ -25,7 +25,7 @@ export const AuthContextProvider = (props) =>{
 
 
             // You can add more actions here
-          }, 30000);
+          }, 60000);
     };
     const logoutHandler = () => {
         localStorage.removeItem('token');
