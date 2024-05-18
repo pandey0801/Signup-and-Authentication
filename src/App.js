@@ -1,45 +1,14 @@
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-// import { Switch, Route, Router } from 'react-router-dom';
-// import { BrowserRouter as Router, Route, Link, Redirect, Switch, NavLink } from 'react-router-dom'; 
-
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
-
-// import Layout from './components/Layout/Layout';
-
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import UserProfile from './components/Profile/UserProfile';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
+import { useContext } from 'react';
+import AuthContext from './store/Auth-context';
 
 
 function App() {
+  const authCtx = useContext(AuthContext)
   return (
    
     <Router>
@@ -49,12 +18,22 @@ function App() {
       <Route path='/' exact>
         <HomePage />
       </Route>
+
+      {!authCtx.isLoggedIn &&(
       <Route path='/auth'>
         <AuthPage />
-      </Route>
+      </Route> )}
+
+      {authCtx.isLoggedIn &&(
       <Route path='/profile'>
         <UserProfile />
       </Route>
+      )}
+
+      <Route path='*'>
+        <Redirect to='/' />
+      </Route>
+
     </Switch>
 
   </Layout>
