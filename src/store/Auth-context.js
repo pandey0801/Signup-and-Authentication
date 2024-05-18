@@ -17,6 +17,15 @@ export const AuthContextProvider = (props) =>{
     const loginHandle = (token) =>{
         localStorage.setItem('token' , token);
         setToken(token);
+
+        setTimeout(() => {
+            alert("1 minute has passed!");
+            localStorage.removeItem('token');
+            setToken(null);
+
+
+            // You can add more actions here
+          }, 30000);
     };
     const logoutHandler = () => {
         localStorage.removeItem('token');
